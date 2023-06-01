@@ -1,12 +1,14 @@
 import Product from '../models/product';
 import Joi from 'joi';
+import Category from '../models/category';
 
 const productSchema = Joi.object({
     name: Joi.string().required(),
     price: Joi.number().required(),
     description: Joi.string().required(),
     image: Joi.string().required(),
-    color: Joi.string().required()
+    color: Joi.string().required(),
+    categoryId: Joi.string().required()
 
 })
 
@@ -21,6 +23,11 @@ export const createProduct = async (req, res) => {
             })
         };
         const product = await Product.create(body);
+        await Category.findByIdAndUpdate(product.categoryId, {
+            $addToSet: {
+                products: product,
+            },
+        });
         if (product.length === 0) {
             return res.status(400).json({
                 message: "Thêm sản phẩm thất bại"
