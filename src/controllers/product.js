@@ -36,6 +36,20 @@ export const createProduct = async (req, res) => {
         })
     }
 };
+export const remove = async (req, res) => {
+    try {
+        // await axios.delete(`http://localhost:3002/products/${req.params.id}`);
+        const data = await Product.findByIdAndDelete(req.params.id);
+        return res.json({
+            message: "Xóa sản phẩm thành công",
+            data,
+        });
+    } catch (error) {
+        return res.status(400).json({
+            message: error.message,
+        });
+    }
+};
 export const updateProduct = async (req, res) => {
     try {
         const id = req.params.id
