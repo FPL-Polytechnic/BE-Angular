@@ -36,3 +36,25 @@ export const createProduct = async (req, res) => {
         })
     }
 };
+export const updateProduct = async (req, res) => {
+    try {
+        const id = req.params.id
+        const data = await Product.findByIdAndUpdate(id, req.body, {
+            new: true
+        })
+        if (!data) {
+            return res.status(400).json({
+                message: "Xóa sản phẩm thất bại"
+            })
+        }
+        return res.status(200).json({
+            message:"Xóa sản phẩm thành công",
+            data
+        })
+    }
+    catch (error) {
+        res.status(400).json({
+            message: error.message
+        })
+    }
+}
