@@ -43,6 +43,7 @@ export const createProduct = async (req, res) => {
         })
     }
 };
+
 export const getAll = async (req, res) => {
     const { _limit = 10, _sort = "createAt", _order = "asc", _page = 1 } = req.query;
     const options = {
@@ -61,6 +62,20 @@ export const getAll = async (req, res) => {
             });
         }
         return res.json(data);
+    } catch (error) {
+        return res.status(400).json({
+            message: error.message,
+        });
+    }
+};
+export const remove = async (req, res) => {
+    try {
+     
+        const data = await Product.findByIdAndDelete(req.params.id);
+        return res.json({
+            message: "Xóa sản phẩm thành công",
+            data,
+        });
     } catch (error) {
         return res.status(400).json({
             message: error.message,
