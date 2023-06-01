@@ -1,12 +1,14 @@
 import Product from '../models/product';
 import Joi from 'joi';
+import Category from '../models/category';
 
 const productSchema = Joi.object({
     name: Joi.string().required(),
     price: Joi.number().required(),
     description: Joi.string().required(),
     image: Joi.string().required(),
-    color: Joi.string().required()
+    color: Joi.string().required(),
+    categoryId: Joi.string().required()
 
 })
 
@@ -21,6 +23,11 @@ export const createProduct = async (req, res) => {
             })
         };
         const product = await Product.create(body);
+        await Category.findByIdAndUpdate(product.categoryId, {
+            $addToSet: {
+                products: product,
+            },
+        });
         if (product.length === 0) {
             return res.status(400).json({
                 message: "Thêm sản phẩm thất bại"
@@ -38,12 +45,29 @@ export const createProduct = async (req, res) => {
 };
 export const remove = async (req, res) => {
     try {
-        // await axios.delete(`http://localhost:3002/products/${req.params.id}`);
         const data = await Product.findByIdAndDelete(req.params.id);
         return res.json({
             message: "Xóa sản phẩm thành công",
             data,
-        });
+});
+export const getAll = async (req, res) => {
+    const { _limit = 10, _sort = "createAt", _order = "asc", _page = 1 } = req.query;
+    const options = {
+        page: _page,
+        limit: _limit,
+        sort: {
+            [_sort]: _order == "desc" ? -1 : 1,
+        },
+    };
+
+    try {
+        const data = await Product.paginate({}, options);
+        if (data.length == 0) {
+            return res.json({
+                message: "Không có sản phẩm nào",
+            });
+        }
+        return res.json(data)
     } catch (error) {
         return res.status(400).json({
             message: error.message,
