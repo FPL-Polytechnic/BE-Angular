@@ -31,3 +31,20 @@ export const createCategory = async (req, res) => {
 
     }
 };
+export const getAll = async (req, res) => {
+    try {
+        const data = await Category.find().populate("products");
+
+        if (data.length == 0) {
+            return res.json({
+                message: "Không có sản phẩm nào",
+            });
+        }
+        return res.json(data);
+    } catch (error) {
+        return res.status(400).json({
+            message: error.message
+        })
+
+    }
+};
