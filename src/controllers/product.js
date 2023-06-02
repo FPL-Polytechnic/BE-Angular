@@ -56,21 +56,46 @@ export const getAll = async (req, res) => {
 
     try {
         const data = await Product.paginate({}, options);
-        if (data.length == 0) {
+        if (data.length === 0) {
             return res.json({
                 message: "Không có sản phẩm nào",
             });
         }
-        return res.json(data);
+        return res.status(200).json({
+            message: "Lấy tất cả sản phẩm thành công",
+            data
+        });
     } catch (error) {
         return res.status(400).json({
             message: error.message,
         });
     }
 };
+
+
+export const getOneProduct = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const data = await Product.findById(id).populate("categoryId", "-__v -updatedAt -createdAt");
+        if (data.length === 0) {
+            return res.status(200).json({
+                message: "Không có sản phẩm"
+            });
+        }
+        return res.status(200).json({
+            message: "Lấy 1 sản phẩm thành công!",
+            data
+        })
+    } catch (error) {
+        return res.status(400).json({
+            message: error.message
+        });
+    }
+};
+
 export const remove = async (req, res) => {
     try {
-     
+
         const data = await Product.findByIdAndDelete(req.params.id);
         return res.json({
             message: "Xóa sản phẩm thành công",
@@ -82,6 +107,7 @@ export const remove = async (req, res) => {
         });
     }
 };
+
 export const updateProduct = async (req, res) => {
     try {
         const id = req.params.id
@@ -94,7 +120,7 @@ export const updateProduct = async (req, res) => {
             })
         }
         return res.status(200).json({
-            message:"Xóa sản phẩm thành công",
+            message: "Xóa sản phẩm thành công",
             data
         })
     }
