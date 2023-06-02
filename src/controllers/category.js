@@ -1,5 +1,6 @@
 import Joi from "joi";
 import Category from "../models/category";
+import Product from "../models/product";
 
 
 const categorySchema = Joi.object({
@@ -35,6 +36,7 @@ export const createCategory = async (req, res) => {
 export const remove = async (req, res) => {
     try {
         const cate = await Category.findOneAndDelete({ _id: req.params.id });
+        await Product.findOneAndDelete({categoryId:req.params.id})
         return res.json({
             message: "Xóa danh mục thành công",
             cate,
