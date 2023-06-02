@@ -95,8 +95,13 @@ export const getOneProduct = async (req, res) => {
 
 export const remove = async (req, res) => {
     try {
-
+        const id=req.params.id;
         const data = await Product.findByIdAndDelete(req.params.id);
+        await Category.findByIdAndUpdate(data.categoryId,{
+            $pull:{
+                products:id
+            }
+        })
         return res.json({
             message: "Xóa sản phẩm thành công",
             data,
