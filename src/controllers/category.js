@@ -62,3 +62,20 @@ export const getAll = async (req, res) => {
 
     }
 };
+export const get = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const category = await Category.findById(id).populate("products");
+        console.log("category", category);
+        if (category.length === 0) {
+            return res.status(200).json({
+                message: "Không có sản phẩm",
+            });
+        }
+        return res.status(200).json(category);
+    } catch (error) {
+        return res.status(400).json({
+            message: error,
+        });
+    }
+};
