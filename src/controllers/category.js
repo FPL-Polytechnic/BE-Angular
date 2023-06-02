@@ -1,6 +1,6 @@
 import Joi from "joi";
 import Category from "../models/category";
-import { remove } from './product';
+
 
 const categorySchema = Joi.object({
     name: Joi.string().required(),
