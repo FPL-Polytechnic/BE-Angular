@@ -33,7 +33,7 @@ export const createCategory = async (req, res) => {
     }
 };
 export const remove = async (req, res) => {
-       try {
+    try {
         const cate = await Category.findOneAndDelete({ _id: req.params.id });
         return res.json({
             message: "Xóa danh mục thành công",
@@ -62,3 +62,25 @@ export const getAll = async (req, res) => {
 
     }
 };
+export const updateCategory = async (req, res) => {
+    try {
+        const id=req.params.id
+        const categoryUpdate=await Category.findByIdAndUpdate(id,req.body,{
+            new:true
+        })
+        if(!categoryUpdate){
+            return res.status(400).json({
+                message:"Cập nhập sản phẩm thất bại"
+            })
+        }
+        return res.status(200).json({
+            message:"Cập nhập sản phẩm thành công",
+            categoryUpdate
+        })
+    } 
+    catch (error) {
+        res.status(400).json({
+            message: error.message
+        })
+    }
+}
