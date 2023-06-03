@@ -52,7 +52,7 @@ export const signin = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({
-                message: "Mật khẩu không đúng",
+                message: "Mật khẩu không đúng hãy nhập lại",
             });
         }
         user.password = undefined;
