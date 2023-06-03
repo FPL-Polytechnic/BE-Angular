@@ -1,5 +1,5 @@
 import User from "../models/user";
-import { signupSchema,signInSchema } from "../schemas/auth";
+import { signupSchema, signInSchema } from "../schemas/auth";
 import bcrypt from "bcryptjs"
 export const signup = async (req, res) => {
     try {
@@ -13,18 +13,18 @@ export const signup = async (req, res) => {
                 message: errors,
             });
         }
-        const userExits=await User.findOne({email:email})
-        if(userExits){
+        const userExits = await User.findOne({ email: email })
+        if (userExits) {
             return res.status(400).json({
-                message:"Email đã đươc đăng ký"
+                message: "Email đã đươc đăng ký"
             })
         }
-        const hashPassword =await bcrypt.hash(password,10)
-        const user=await User.create({
-            email,password:hashPassword,name
+        const hashPassword = await bcrypt.hash(password, 10)
+        const user = await User.create({
+            email, password: hashPassword, name
         })
         return res.status(200).json({
-            message:"Đăng ký thành công",
+            message: "Đăng ký thành công",
             user
         })
     }

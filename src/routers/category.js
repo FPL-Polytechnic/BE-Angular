@@ -7,7 +7,6 @@ router.post("/category", createCategory);
 router.delete("/category/:id", remove)
 router.get("/category", getAll)
 router.get("/category/:id", get)
-
-router.patch("/category/:id",updateCategory)
+router.patch("/category/:id", updateCategory)
 
 export default router;
