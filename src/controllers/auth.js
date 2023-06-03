@@ -43,15 +43,12 @@ export const signin = async (req, res) => {
                 message: error.details.map((err) => err.message),
             });
         }
-        // Kiểm tra xem user đã đk chưa?
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({
                 message: "Email không tồn tại",
             });
         }
-        // So sánh mật khẩu
-
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({
@@ -59,7 +56,6 @@ export const signin = async (req, res) => {
             });
         }
         user.password = undefined;
-
         return res.status(200).json({
             message: "Đăng nhập thành công",
             user,
