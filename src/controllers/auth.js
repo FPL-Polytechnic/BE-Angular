@@ -63,13 +63,31 @@ export const signin = async (req, res) => {
             user,
             accessToken: token,
         });
-    }  
-     catch (error) {
+    }
+    catch (error) {
         return res.status(400).json({
             message: error.message,
-        });   
-    } 
-
-   
-  
+        });
+    }
 };
+
+
+export const getAllUser = async (req, res) => {
+    try {
+        const data = await User.find();
+        if (data.length === 0) {
+            return res.status(400).json({
+                message: "Không có user nào !"
+            });
+        }
+        return res.status(200).json({
+            message: " Lấy tất cả user thành công!",
+            data
+        })
+    } catch (error) {
+        return res.status(400).json({
+            message: error.message
+        })
+
+    }
+}
