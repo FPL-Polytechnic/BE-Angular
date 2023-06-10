@@ -91,3 +91,16 @@ export const getAllUser = async (req, res) => {
 
     }
 }
+export const removeUser = async (req, res) => {
+    try {
+        const data = await User.findByIdAndDelete(req.params.id);
+        return res.json({
+            message: "Xóa người dùng thành công",
+            data,
+        });
+    } catch (error) {
+        return res.status(400).json({
+            message: error.message,
+        });
+    }
+};
