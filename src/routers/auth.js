@@ -1,5 +1,6 @@
 import express from "express";
 import { updateAllUser, removeUser, getAllUser, signin, signup } from "../controllers/auth";
+import checkPermission from "../middlewares/checkPermission";
 
 
 const router = express.Router();

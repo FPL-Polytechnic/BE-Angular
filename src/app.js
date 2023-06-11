@@ -16,4 +16,3 @@ mongoose.connect('mongodb://127.0.0.1:27017/be_angular')
     .then(() => console.log("Kết nối thành công!"));
 
 export const viteNodeApp = app;
-
