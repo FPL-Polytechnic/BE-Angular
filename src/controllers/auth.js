@@ -109,15 +109,15 @@ export const removeUser = async (req, res) => {
 
 export const updateAllUser = async (req, res) => {
     try {
-        const id=req.params.id
-        const userUpdate = await User.findByIdAndUpdate(id,req.body,{
-         new:true,
+        const id = req.params.id
+        const userUpdate = await User.findByIdAndUpdate(id, req.body, {
+            new: true,
         });
         if (!userUpdate) {
             return res.status(400).json({
-                message: "Cập nhật user thất bại",  
+                message: "Cập nhật user thất bại",
             });
-        }       
+        }
         return res.status(200).json({
             message: " Cập nhật user thành công",
             userUpdate,
@@ -128,4 +128,5 @@ export const updateAllUser = async (req, res) => {
         })
 
     }
+}
 
