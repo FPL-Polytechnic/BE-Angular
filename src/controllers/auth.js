@@ -2,6 +2,7 @@ import User from "../models/user";
 import { signupSchema, signInSchema } from "../schemas/auth";
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
+
 export const signup = async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -91,6 +92,7 @@ export const getAllUser = async (req, res) => {
 
     }
 }
+
 export const removeUser = async (req, res) => {
     try {
         const data = await User.findByIdAndDelete(req.params.id);
@@ -104,3 +106,26 @@ export const removeUser = async (req, res) => {
         });
     }
 };
+
+export const updateAllUser = async (req, res) => {
+    try {
+        const id=req.params.id
+        const userUpdate = await User.findByIdAndUpdate(id,req.body,{
+         new:true,
+        });
+        if (!userUpdate) {
+            return res.status(400).json({
+                message: "Cập nhật user thất bại",  
+            });
+        }       
+        return res.status(200).json({
+            message: " Cập nhật user thành công",
+            userUpdate,
+        })
+    } catch (error) {
+        return res.status(400).json({
+            message: error.message
+        })
+
+    }
+
