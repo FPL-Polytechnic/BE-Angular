@@ -29,7 +29,7 @@ export const createProduct = async (req, res) => {
             },
         });
         if (product.length === 0) {
-            return res.status(400).json({ 
+            return res.status(400).json({
                 message: "Thêm sản phẩm thất bại"
             })
         };
@@ -95,11 +95,11 @@ export const getOneProduct = async (req, res) => {
 
 export const remove = async (req, res) => {
     try {
-        const id=req.params.id;
+        const id = req.params.id;
         const data = await Product.findByIdAndDelete(req.params.id);
-        await Category.findByIdAndUpdate(data.categoryId,{
-            $pull:{
-                products:id
+        await Category.findByIdAndUpdate(data.categoryId, {
+            $pull: {
+                products: id
             }
         })
         return res.json({
@@ -121,11 +121,11 @@ export const updateProduct = async (req, res) => {
         })
         if (!data) {
             return res.status(400).json({
-                message: "Xóa sản phẩm thất bại"
+                message: "Cập nhật sản phẩm thất bại"
             })
         }
         return res.status(200).json({
-            message: "Xóa sản phẩm thành công",
+            message: "Cập nhật sản phẩm thành công",
             data
         })
     }
