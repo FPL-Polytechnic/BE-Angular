@@ -29,7 +29,7 @@ export const createProduct = async (req, res) => {
             },
         });
         if (product.length === 0) {
-            return res.status(400).json({
+            return res.status(400).json({ 
                 message: "Thêm sản phẩm thất bại"
             })
         };
