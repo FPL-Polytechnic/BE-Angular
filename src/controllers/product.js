@@ -135,16 +135,16 @@ export const updateProduct = async (req, res) => {
         })
     }
 }
-export const textSearch = async (req,res)=>{
-    try { 
-        const conditions = { name : {$regex: req.query.key, $options: "i"}}
-       
+export const textSearch = async (req, res) => {
+    try {
+        const conditions = { name: { $regex: req.query.key, $options: "i" } }
+
         const books = await Product.find(conditions)
         res.json(books)
     } catch (error) {
         res.status(400).json({
-            error:error.message
-        })        
+            error: error.message
+        })
     }
 
 }

@@ -10,6 +10,6 @@ router.patch("/product/:id", checkPermission, updateProduct)
 router.get("/product", getAll)
 router.get("/product/:id", getOneProduct)
 router.delete("/product/:id", checkPermission, remove)
-router.get("/search",textSearch)
+router.get("/search", textSearch)
 
 export default router;
