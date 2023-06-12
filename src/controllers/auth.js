@@ -93,6 +93,27 @@ export const getAllUser = async (req, res) => {
     }
 }
 
+export const getOneUser = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const user = await User.findById(id);
+        if (user.length === 0) {
+            return res.status(400).json({
+                message: "Không có user nào !"
+            });
+        }
+        return res.status(200).json({
+            message: " Lấy 1 user thành công!",
+            user
+        })
+    } catch (error) {
+        return res.status(400).json({
+            message: error.message
+        })
+
+    }
+}
+
 export const removeUser = async (req, res) => {
     try {
         const data = await User.findByIdAndDelete(req.params.id);
